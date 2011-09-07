@@ -7,7 +7,7 @@
 
 Example:
 
-    <code> <select max_size="1" id="people" class="chzn-select chzn-done"> </code>
+    <select max_size="1" id="people" class="chzn-select chzn-done">
 
 Chosen is a library for making long, unwieldy select boxes more user friendly.
 
