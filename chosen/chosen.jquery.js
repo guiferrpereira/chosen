@@ -34,7 +34,7 @@
       this.form_field_jq = $(this.form_field);
       this.is_multiple = this.form_field.multiple;
       this.is_rtl = this.form_field_jq.hasClass("chzn-rtl");
-      this.default_text_default = this.form_field.multiple ? "Select Some Options" : "Select an Option";
+      this.default_text_default = this.form_field.multiple ? I18n.t("js.plugin.chosen.select_multiple_options") : I18n.t("js.plugin.chosen.select_one_option");
       this.set_up_html();
       this.register_observers();
       this.form_field_jq.addClass("chzn-done");
@@ -52,6 +52,7 @@
     };
     Chosen.prototype.set_up_html = function() {
       var container_div, dd_top, dd_width, sf_width;
+      this.max_size = $("#" + this.form_field.id).attr("max_size");
       this.container_id = this.form_field.id.length ? this.form_field.id.replace(/(:|\.)/g, '_') : this.generate_field_id();
       this.container_id += "_chzn";
       this.f_width = this.form_field_jq.width();
@@ -361,7 +362,15 @@
       target = $(evt.target).hasClass("active-result") ? $(evt.target) : $(evt.target).parents(".active-result").first();
       if (target.length) {
         this.result_highlight = target;
-        return this.result_select(evt);
+  			if (this.results_showing && this.max_size == null) {
+					return this.result_select(evt);
+				} else if(this.results_showing) {
+					if (this.search_choices.find("li.search-choice").length < this.max_size) {
+						return this.result_select(evt);
+					} else {
+						return false;
+					}
+				}
       }
     };
     Chosen.prototype.search_results_mouseover = function(evt) {
@@ -546,7 +555,7 @@
     };
     Chosen.prototype.no_results = function(terms) {
       var no_results_html;
-      no_results_html = $('<li class="no-results">No results match "<span></span>"</li>');
+      no_results_html = $('<li class="no-results">' + I18n.t("js.plugin.chosen.no_results_match") + ' "<span></span>"</li>');
       no_results_html.find("span").first().html(terms);
       return this.search_results.append(no_results_html);
     };
@@ -616,9 +625,15 @@
           break;
         case 13:
           evt.preventDefault();
-          if (this.results_showing) {
-            return this.result_select(evt);
-          }
+  			  if (this.results_showing && this.max_size == null) {
+					  return this.result_select(evt);
+				  } else if(this.results_showing) {
+					  if (this.search_choices.find("li.search-choice").length < this.max_size) {
+						  return this.result_select(evt);
+					  } else {
+						  return false;
+					  }
+				  }
           break;
         case 27:
           if (this.results_showing) {
