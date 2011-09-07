@@ -1,5 +1,13 @@
 # Chosen
 
+# With this fork 
+
+- You can translate messages with I18n-js (check on https://github.com/fnando/i18n-js)
+- You can insert max_size attribute on select tag to limit fields selected
+
+Example:
+    <select max_size="1" id="people" class="chzn-select chzn-done">
+
 Chosen is a library for making long, unwieldy select boxes more user friendly.
 
 - jQuery support: 1.4+
