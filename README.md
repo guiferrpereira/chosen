@@ -6,7 +6,8 @@
 - You can insert max_size attribute on select tag to limit fields selected
 
 Example:
-    <select max_size="1" id="people" class="chzn-select chzn-done">
+
+    <code> <select max_size="1" id="people" class="chzn-select chzn-done"> </code>
 
 Chosen is a library for making long, unwieldy select boxes more user friendly.
 
